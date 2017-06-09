@@ -1,0 +1,49 @@
+{extend name="public/base" /}
+{block name="css"}
+<link rel="stylesheet" href="__HOME__/css/news.min.css" />
+{/block}
+{block name="container"}
+<div class="layout-container">
+ <div class="section">
+      <div class="container">
+        <div class="section--header">
+			<h2 class="section--title">{$title}</h2>
+		</div>
+
+        <div class="news-contaier">
+          <div class="blog">
+            <div class="am-g">
+            {volist name="list" id="vo"}
+            <div class="am-u-lg-4 am-u-md-6">
+                <div class="article">
+                  <div class="article-img">
+                    <img src="__ROOT__{$vo.picurl}" alt="{$vo.title}" width="360px" height="220px" />
+                  </div>
+                  <div class="article-header">
+                    <h2><a href="{:url('home/infolist/show',['id'=>$vo['id']])}" rel="">{$vo.title}</a></h2>
+                    <ul class="article--meta">
+						<li class="article--meta_item -date">{$vo.create_time|date='Y-m-d H:i:s',###}</li>
+					</ul>
+                  </div>
+                  <div class="article--content">
+						<p>{$vo.intro}</p>
+					</div>
+                  <div class="article--footer">
+						<a href="{:url('home/infolist/show',['id'=>$vo['id']])}" class="link">更多</a>
+					</div>
+                </div>
+              </div>
+            {/volist}     
+              
+            </div>
+            <!-- pagination-->
+            {$list->render()}
+            
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+</div>
+{/block}

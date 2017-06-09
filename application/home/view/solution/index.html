@@ -1,0 +1,35 @@
+{extend name="public/base" /}
+{block name="css"}
+<link rel="stylesheet" href="__HOME__/css/solution.min.css" />
+{/block}
+{block name="container"}
+<div class="layout-container">
+    <div class="section">
+      <div class="container">
+        <div class="section--header">
+          <h2 class="section--title">解决方案</h2>
+        </div>
+
+        <div class="o2o-container">
+          <div class="am-g">
+          {volist name="list" id="vo"}
+            <div class="am-u-lg-3" style="float: left;">
+              <div class="o2o-box"  style="text-align:center">
+                <a href="{:url('home/solution/show',['id'=>$vo['id']])}">
+                <img src="__ROOT__{$vo.picurl}" alt="{$vo.title}" width="100px" height="100px" />
+                </a>
+                <div class="o2o-content">
+                  <h3 style="text-align: center;margin-top:20px;"><a href="{:url('home/solution/show',['id'=>$vo['id']])}">{$vo.title}</a></h3>
+                  <p style="height: 50px;">{$vo.intro}</p>
+                </div>
+              </div>
+            </div>
+            {/volist}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+</div>
+{/block}

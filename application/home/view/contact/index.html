@@ -1,0 +1,91 @@
+{extend name="public/base" /}
+{block name="css"}
+<link rel="stylesheet" href="__HOME__/css/contact.min.css" />
+{/block}
+{block name="container"}
+<div class="layout-container">
+<div class="section">
+      <div class="container">
+        <div class="section--header">
+          <h2 class="section--title">联系我们</h2>
+        </div>
+
+        <div class="section-container">
+          <div class="am-g">
+            <!--contact-left start-->
+            <div class="am-u-md-5">
+              <ul class="contact-left">
+                <li class="contact-box-item">
+                  <div class="contact_item">
+                    <i class="contact_item--icon am-icon-phone"></i>
+                    <h3 class="contact_item--title">热线</h3>
+                    <p class="contact_item--text">
+                      <strong>{:get_conf('web_hotline')}</strong>,
+                      <br>{:get_conf('web_hotline_more')}
+                    </p>
+                  </div>
+                </li>
+                <li class="contact-item">
+                  <div class="contact_item">
+                    <i class="contact_item--icon am-icon-envelope-o"></i>
+                    <h3 class="contact_item--title">邮箱</h3>
+                    <p class="contact_item--text">
+                      {:get_conf('web_email')}
+                       <br/>{:get_conf('web_email_more')}
+                    </p>
+                  </div>
+                </li>
+                <li class="contact-item">
+                  <div class="contact_item">
+                    <i class="contact_item--icon am-icon-map-marker"></i>
+                    <h3 class="contact_item--title">地址</h3>
+                    <p class="contact_item--text">
+                      {:get_conf('web_address')}
+                       <br/>{:get_conf('web_address_more')}
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!--contact-left end-->
+
+            <!--contact-right start-->
+              <div class="am-u-md-7">
+                <div class="contact-form">
+                  <h3 class="contact-form_title">留言</h3>
+                  <form action="" method="post" class="am-form">
+                    <div class="am-g">
+                      <div class="am-u-md-6">
+                        <input type="text" class="" name="truename" placeholder="姓名" required>
+                      </div>
+                      <div class="am-u-md-6">
+                        <input type="text" class="" name="mobile" placeholder="电话" required pattern="^1[3|4|5|8][0-9]\d{4,8}$">
+                      </div>
+                    </div>
+
+                    <div class=am-g>
+                      <div class="am-u-md-12">
+                        <div class="am-form-group">
+                          <textarea class="" rows="5" name="content" placeholder="写下你想说的..." required></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="am-g">
+                      <div class="am-u-md-9">
+
+                      </div>
+                      <div class="am-u-md-3">
+                        <p><button type="submit" class="am-btn am-btn-default btn-reguest am-fr btn-fl">提交</button></p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            <!--contact-right end-->
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{/block}

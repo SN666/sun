@@ -1,0 +1,61 @@
+{extend name="public/base" /}
+{block name="css"}
+<link rel="stylesheet" href="__HOME__/css/join.min.css" />
+{/block}
+{block name="container"}
+<div class="layout-container">
+     <div class="section">
+      <div class="container">
+        <div class="section--header">
+          <h2 class="section--title">加入我们</h2>
+        </div>
+
+        <div class="join-container">
+          <div class="am-g">
+            <div class="am-u-md-3">
+              <div class="careers--articles">
+                  <h3 class="careers--subtitle">福利待遇</h3>
+                  <div class="careers_articles">
+                    <div class="careers_article">
+                      <i class="careers_article--icon am-icon-diamond"></i>
+                      <div class="careers_article--text">
+                        <p>
+                         {:get_conf('web_treatment')}
+                        </p> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="am-u-md-9">
+              <h3 class="careers--subtitle">招贤纳士</h3>
+              <div class="careers--vacancies">
+                <div class="am-panel-group" id="accordion">
+                 {volist name="list" id="vo" key="key"}
+                  <div class="am-panel am-panel-default">
+                    <div class="am-panel-hd">
+                      <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-{$vo.id}'}">
+                        {$vo.title}
+                      </h4>
+                    </div>
+                    <div id="do-not-say-{$vo.id}" class="am-panel-collapse am-collapse {if condition='$key eq 1'}am-in{/if}">
+                      <div class="am-panel-bd">
+                            <h5>职位描述：</h5>
+                            {$vo.content}
+
+                            <h5>请将您的简历发送至： <a href="mailto:{:get_conf('web_email')}">{:get_conf('web_email')}</a></h5>
+                      </div>
+                    </div>
+                  </div>
+                  {/volist}
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{/block}

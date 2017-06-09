@@ -1,0 +1,99 @@
+{extend name="public/base" /}
+{block name="css"}
+<link rel="stylesheet" href="__HOME__/css/index.min.css" />
+{/block}
+{block name="container"}
+<div class="layout-container">
+  <div class="index-page">
+    <div data-am-widget="slider" class="am-slider am-slider-c3" data-am-slider='{"controlNav":false,"animation":"fade"}'>
+    <ul class="am-slides">
+          {volist name="banner" id="vo"}
+           <li> 
+            <div class="am-tab-panel ">
+              <div class="index-banner" style="background-image:url('__ROOT__{$vo.picurl}');background-repeat: repeat-x; ">
+                  <div class="index-mask">
+                    <div class="container">
+                      <div class="am-g">
+                        <div class="am-u-md-10 am-u-sm-centered">
+                          <h1 class="slide_simple--title">{$vo.title}</h1>
+                          <p class="slide_simple--text am-text-left">
+                            {$vo.intro}
+                          </p>
+                          <div class="slide_simple--buttons">
+                            <a href="{$vo.linkurl ?? '####'}" class="am-btn am-btn-danger">了解更多</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </li>
+          {/volist}
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+    <div class="section">
+      <div class="container">
+        <div class="section--header">
+          <h2 class="section--title">产品中心</h2>
+        </div>
+
+        <!--index-container start-->
+        <div class="index-container">
+          <div class="am-g">
+          {volist name="product" id="vo"}
+            <div class="am-u-md-3">
+              <div class="features_item">
+                <a href="{:url('home/product/show',['id'=>$vo['id']])}"><img src="__ROOT__{$vo.picurl}" alt="{$vo.title}" width="260px" height="200px"></a>
+                <h3 class="features_item--title"><a href="{:url('home/product/show',['id'=>$vo['id']])}">{$vo.title}</a></h3>
+              </div>
+            </div>
+            {/volist}
+          </div>
+
+          <div class="index-more">
+            <a href="{:url('home/product/index')}" class="am-btn am-btn-secondary">更多&nbsp;&nbsp;>></a>
+          </div>
+        </div>
+        <!--index-container end-->
+      </div>
+    </div>
+
+  <div class="section"  style="border-bottom: 1px solid #e9e9e9;">
+    <div class="container">
+      <div class="section--header">
+        <h2 class="section--title">解决方案</h2>
+      </div>
+
+      <!--index-container start-->
+      <div class="index-container">
+        <div class="am-g">
+        {volist name="solution" id="vo"}
+          <div class="am-u-md-3">
+            <div class="service_item" style="text-align:center;margin-top:20px;">
+                <img src="__ROOT__{$vo.picurl}" alt="{$vo.title}" width="100px" height="100px" />
+              <h3 class="service_item--title">{$vo.title}</h3>
+              <div class="service_item--text">
+                <p>{$vo.intro}</p>
+              </div>
+              <footer class="service_item--footer"><a href="{:url('home/solution/show',['id'=>$vo['id']])}" class="link -blue_light">更多>></a></footer>
+            </div>
+          </div>
+        {/volist}
+        </div>
+        <div class="index-more">
+            <a href="{:url('home/solution/index')}" class="am-btn am-btn-secondary">更多&nbsp;&nbsp;>></a>
+          </div>
+      </div>
+      <!--index-container end-->
+    </div>
+  </div>
+
+{/block}
+{block name="js"}
+<script src="__HOME__/js/common.js" charset="utf-8"></script>
+{/block}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{block name="title"}{$mate_title}-{:get_conf('web_name')}{/block}</title>
+
+    <link href="__CONSOLE__/css/style.default.css" rel="stylesheet">
+    <!--   sweetalert弹出样式 -->
+    <link href="__PLUGIN__/sweetalert/css/sweetalert.css" rel="stylesheet">
+    <link href="__CONSOLE__/css/jquery.datatables.css" rel="stylesheet">
+    {block name="css"}{/block}
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="__CONSOLE__/js/html5shiv.js"></script>
+    <script src="__CONSOLE__/js/respond.min.js"></script>
+
+    <![endif]-->
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+        #l-map{height:800px;width:100%;}
+        #r-result{width:100%; font-size:14px;line-height:20px;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=revKdhGPCWfQNKdvLsu6NmuM"></script>
+</head>
+<body>
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+<section>
+
+    {include file="template:sidebar" /}
+
+    <div class="mainpanel">
+
+        {include file="template:topbar" /}
+
+        <div class="pageheader">
+            <h2><i class="fa fa-list-ul"></i> {$mate_title} <span>{$mate_operate}</span></h2>
+            <div class="breadcrumb-wrapper">
+                <span class="label">现在所在位置:</span>
+                <ol class="breadcrumb">
+                    <li>{$mate_title} </li>
+                    <li class="active">{$mate_operate}</li>
+                </ol>
+            </div>
+        </div>
+
+
+            <body>
+            <div id="l-map"></div>
+            <div id="r-result">
+                <input type="button" value="批量地址解析" onclick="bdGEO()" />
+                <div id="result"></div>
+            </div>
+            </body>
+
+            <div id="renew_submit" style="display: none;"></div>
+
+    </div><!-- mainpanel -->
+
+    <input name="map" id="map" value="{$map}" type="hidden"/>
+
+</section>
+
+<script src="__CONSOLE__/js/jquery-1.11.1.min.js"></script>
+<script src="__CONSOLE__/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="__CONSOLE__/js/bootstrap.min.js"></script>
+<script src="__CONSOLE__/js/modernizr.min.js"></script>
+<script src="__CONSOLE__/js/jquery.sparkline.min.js"></script>
+<script src="__CONSOLE__/js/toggles.min.js"></script>
+<script src="__CONSOLE__/js/retina.min.js"></script>
+<script src="__CONSOLE__/js/jquery.cookies.js"></script>
+
+<script src="__CONSOLE__/js/select2.min.js"></script>
+<script src="__CONSOLE__/js/custom.js"></script>
+<script src="__PLUGIN__/sweetalert/js/sweetalert.min.js"></script>
+
+<script src="__CONSOLE__/js/jquery.datatables.min.js"></script>
+<script src="__CONSOLE__/js/listing.js"></script><!-- 列表页处理js 手写 -->
+<!-- 验证 -->
+<script src="__CONSOLE__/js/bootstrapValidator.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        bdGEO();
+    });
+
+</script>
+<script type="text/javascript">
+    // 百度地图API功能 {"lng":104.114129,"lat":37.550339,"errorno":"0"}
+
+    var map = new BMap.Map("l-map");
+    map.centerAndZoom(new BMap.Point(104.114129,47.356592), 5);
+    map.enableScrollWheelZoom(true);
+    var index = 0;
+    var myGeo = new BMap.Geocoder();
+    var s  = $('#map').val();
+    var adds = s.split(",");// 在每个逗号(,)处进行分解。
+    function bdGEO(){
+        var add = adds[index];
+        geocodeSearch(add);
+        index++;
+    }
+    function geocodeSearch(add){
+        if(index < adds.length){
+            setTimeout(window.bdGEO,400);
+        }
+        myGeo.getPoint(add, function(point){
+            if (point) {
+                document.getElementById("result").innerHTML +=  index + "、" + add + ":" + point.lng + "," + point.lat + "</br>";
+                var address = new BMap.Point(point.lng, point.lat);
+                addMarker(address,new BMap.Label(index+":"+add,{offset:new BMap.Size(20,-10)}));
+            }
+        }, "合肥市");
+    }
+    // 编写自定义函数,创建标注
+    function addMarker(point,label){
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+        marker.setLabel(label);
+    }
+</script>
+</body>
+</html>

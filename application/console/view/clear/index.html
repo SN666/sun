@@ -1,0 +1,22 @@
+{extend name="template/base" /}
+{block name="content"}
+ <div class="panel panel-default">
+         <div class="panel-heading" style="border-bottom:none;">
+              <div>
+              <!-- <a class="btn btn-primary" href="{:url('console/CnCity/create')}" style="float:right;">添加</a> --> 
+              </div>
+             <h4 class="panel-title">{:$mate_operate}</h4>
+        </div>
+        <div class="panel-body">
+          
+  
+              <div class="notfoundpanel">
+                <h1>OK!</h1>
+                <h3>{$text}清理成功！</h3>
+              </div><!-- notfoundpanel -->
+  
+        </div>
+     </div>
+  </div><!-- rightpanel -->
+
+{/block}
