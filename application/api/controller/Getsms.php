@@ -9,7 +9,7 @@ use think\Url;
 use think\Controller;
 use think\Db;
 
-class User extends Api
+class Getsms extends Api
 {
 
     //登录
@@ -141,7 +141,7 @@ class User extends Api
     //求经纬度
   function jwd($address,$city){
 
-      $json=file_get_contents("http://api.map.baidu.com/geocoder?address=中国&output=json&key=96980ac7cf166499cbbcc946687fb414&city=中国");
+      $json=file_get_contents("http://api.map.baidu.com/geocoder?address='".$address."'&output=json&key=96980ac7cf166499cbbcc946687fb414&city='".$city."'");
      $infolist=json_decode($json);
      $array=array('errorno'=>'1');
      if(isset($infolist->result->location) && !empty($infolist->result->location)){
@@ -149,29 +149,6 @@ class User extends Api
      }
 
   }
-
-
-    //修改密码
-    function updpass(){
-
-        $data['account'] = Request::instance()->param('account');
-        $data['mobile'] = Request::instance()->param('mobile');
-        $data['password']= md5(md5(Request::instance()->param('password')));
-
-        if(!empty($data['mobile']) && !empty($data['password'])){
-
-            $rel = Db::name('user')->where(['mobile'=>$data['mobile']])->update($data);
-            $info = ['code'=>'200','msg'=>'成功'];
-            echo json_encode($info);die;
-
-        }else{
-            $info = ['code'=>'400','msg'=>'参数不全'];
-            echo json_encode($info);die;
-        }
-
-
-
-    }
 
 
 
