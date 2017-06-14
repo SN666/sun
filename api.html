@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>接口</title>
+</head>
+<body>
+红色为必填参数<br>
+1.会员注册【post】<br>
+参数<br>
+<font color="red">account</font>(账号)<br>
+<font color="red">mobile</font>(手机号)<br>
+<font color="red">password</font>(密码明文)<br>
+<font color="red">realname</font>(真实姓名)<br>
+<font color="red">idcard</font>(身份证号)<br>
+<font color="red">country</font>(国家)<br>
+<font color="red">prov</font>(省)（传汉字）<br>
+<font color="red">city</font>(市)（传汉字）<br>
+<font color="red">area</font>(区)（传汉字）<br>
+<font color="red">village</font>(村)（传汉字）<br>
+<font color="red">sd</font>sd号<br>
+
+地址(示例)：/index.php/Api/instance/createmember?mobile=15711418898<br>
+返回 status=1成功 &nbsp; =2 失败<br>
+{<br>
+&nbsp;"status": "2",<br>
+&nbsp;"message": "该手机号已经注册！"<br>
+}<br><br>
+
+2.消费(post提交),红色为必传参数<br>
+参数<br>
+<font color="red">mobile</font>(手机号必填)<br>
+<font color="red">cost</font>(金额必填)<br>
+
+地址(示例)：http://jushengshangcheng.com/index.php/api/Instance/consumption?mobile=15045878888&cost=500<br>
+返回 status=1成功 &nbsp; =2 失败<br>
+{<br>
+&nbsp;"status": "1",<br>
+&nbsp;"message": "成功！"<br>
+}<br><br><br>
+
+
+3.修改会员(post提交)<br>
+参数<br>
+<font color="red">mobile</font>(旧手机号必填)<br>
+<font  >n_username</font>(更改后的姓名)<br>
+<font  >n_password</font>(更改后的密码)<br>
+
+地址(示例)：http://jushengshangcheng.com/index.php/api/Instance/editmember<br>
+返回 status=1成功 &nbsp; =2 失败<br>
+{<br>
+&nbsp;"status": "1",<br>
+&nbsp;"message": "成功！"<br>
+}<br><br>
+
+4.购物积分(post提交)地址http://jushengshangcheng.com/index.php/api/Instance/integrals<br>
+参数<br>
+mobile（手机号，必填）<br>
+intstate（积分类别，intstate=1 购物积分 ，intstate= 2 提现积分）<br>
+status（增加 status=1，减少 status=2）<br>
+value（值，必填）<br>
+举个栗子//购物积分减10    ?mobile=15045371690&intstate=1&status=2&value=10<br>
+
+
+</body>
+</html>

@@ -57,13 +57,14 @@ class User extends Api
         $data['city_cn'] = Request::instance()->param('city');
         $data['area_cn'] = Request::instance()->param('area');
         $data['address'] = Request::instance()->param('address');
+        $data['village'] = Request::instance()->param('village');
         $data['sd'] = Request::instance()->param('sd');
 
 
         $info = [];
         if(!empty($data['account']) && !empty($data['mobile']) && !empty($data['password']) && !empty($data['truename']) && !empty($data['idcard'])
             && !empty($data['country']) && !empty($data['prov_cn']) && !empty($data['city_cn']) && !empty($data['area_cn'])
-            && !empty($data['address']) && !empty($data['sd'])){
+            && !empty($data['address']) && !empty($data['sd'] ) && !empty($data['village'] )){
             //判断账号是否重复
             $is_account = Db::name('user')->where(['account' =>$data['account']])->find();
             if(!empty($is_account['id'])){
