@@ -151,7 +151,7 @@ class User extends Api
   }
 
 
-    //修改密码
+    //修改密码   POST
     function updpass(){
 
         $data['account'] = Request::instance()->param('account');
