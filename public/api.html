@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>接口</title>
+</head>
+<body>
+红色为必填参数<br>
+1.会员注册【post】<br>
+参数<br>
+<font color="red">account</font>(账号)<br>
+<font color="red">mobile</font>(手机号)<br>
+<font color="red">password</font>(密码明文)<br>
+<font color="red">realname</font>(真实姓名)<br>
+<font color="red">idcard</font>(身份证号)<br>
+<font color="red">country</font>(国家)<br>
+<font color="red">prov</font>(省)（传汉字）<br>
+<font color="red">city</font>(市)（传汉字）<br>
+<font color="red">area</font>(区)（传汉字）<br>
+village(村)（传汉字）<br>
+<font color="red">address</font>(详细地址)（传汉字）<br>
+<font color="red">sd</font>(sd号)<br>
+
+地址：/index.php/api/user/reg<br>
+返回：<br>
+{<br>
+&nbsp;&nbsp;"code": "200",<br>
+&nbsp;&nbsp;"msg": "成功"<br>
+}<br>
+<br>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+<br>
+2.登录【post】<br>
+参数<br>
+<font color="red">mobile</font>(手机号)<br>
+<font color="red">password</font>(金额)<br>
+
+地址：/index.php/api/user/login<br>
+返回：code 200=成功，500=接口不存在，400参数不全<br>
+{<br>
+&nbsp;&nbsp;"code": "200",<br>
+&nbsp;&nbsp;"msg": "成功",<br>
+&nbsp;&nbsp;"data": {<br>
+&nbsp;&nbsp;&nbsp;"id": 1,【用户ID】<br>
+&nbsp;&nbsp;&nbsp;"truename": "马淑霞了",【用户名称】<br>
+&nbsp;&nbsp;&nbsp;"mobile": "18846938242",【电话】<br>
+&nbsp;&nbsp;&nbsp;"sd": "1245215",【SD号】<br>
+&nbsp;&nbsp;&nbsp;"lng": "126.62",【经度】<br>
+&nbsp;&nbsp;&nbsp;"lat": "45.77",【纬度】<br>
+&nbsp;&nbsp;&nbsp;"idcard": "20303215484654845",【身份证号】<br>
+&nbsp;&nbsp;&nbsp;"city_cn": "鸡西市"【用户所在城市】<br>
+&nbsp;&nbsp;&nbsp;"photo": ""【头像】<br>
+&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;"city": "鸡西",【城市】<br>
+&nbsp;&nbsp;"high": "高温 24℃",【最高温】<br>
+&nbsp;&nbsp;"low": "低温 13℃",【最低温】<br>
+&nbsp;&nbsp;"type": "阵雨"【天气】<br>
+}<br><br>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+<br>
+
+3.修改会员(post提交)<br>
+参数<br>
+<font color="red">account</font>(账号)<br>
+<font color="red" >mobile</font>(手机号)<br>
+<font color="red" >password</font>(更改后的密码)<br>
+
+地址：/index.php/api/user/updpass<br>
+返回：code 200=成功，500=失败，400=参数不全<br>
+{<br>
+&nbsp;&nbsp;"code": "200",<br>
+&nbsp;&nbsp;"msg": "成功"<br>
+}<br>
+
+</body>
+</html>

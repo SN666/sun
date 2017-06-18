@@ -3,7 +3,7 @@
  <div class="panel panel-default">
          <div class="panel-heading" style="border-bottom:none;">
               <div>
-              <a class="btn btn-primary" href="{:url('console/User/create')}" style="float:right;">添加</a> 
+              <a class="btn btn-primary" href="{:url('console/Qa/create')}" style="float:right;">添加</a>
               </div>
              <h4 class="panel-title">{:$mate_operate}</h4>
         </div>
@@ -13,12 +13,8 @@
             <table class="table table-striped table-bordered table-hover" id="table1">
               <thead>
                  <tr>
-                     <th>ID</th>
-<th>账号</th>
-<th>真实姓名</th>
-<th>手机号</th>
-<th>sd号</th>
-<th>身份证号</th>
+<th>id</th>
+<th>问题类型</th>
 <th>操作</th>
                  </tr>
               </thead>
@@ -26,11 +22,8 @@
                     {volist name="list" id="vo"}
                             <tr>
                                 <td><div class="ckbox ckbox-primary"><input type="checkbox" id="checkbox{$vo.id}" name="checkid[]" value="{$vo.id}" /><label for="checkbox{$vo.id}">{$vo.id}</label></div></td>
-                                <td>{$vo.account}</td>
-                                <td>{$vo.truename}</td>
-                                <td>{$vo.mobile}</td>
-                                <td>{$vo.sd}</td>
-                                <td>{$vo.idcard}</td>
+                                <td>{$vo.title}</td>
+
                                 <td>
                                     {$vo.id|show_operate='update','编 辑'}
                                     &nbsp;&nbsp;&nbsp;&nbsp;

@@ -20,7 +20,7 @@ $acl_inc[$i]['low_leve']['dashboard']= array( "控制台" =>array('index',
 											)
 							);
 $i++;
-$acl_inc[$i]['low_title'] =  array('全局设置','fa fa-cog');
+$acl_inc[$i]['low_title'] =  array('首页设置','fa fa-cog');
 $acl_inc[$i]['low_leve']['webconfig']= array( "配置管理" =>array('index',
                                               array(
 												 "列表" 		=> 'webconfig1',
@@ -32,17 +32,7 @@ $acl_inc[$i]['low_leve']['webconfig']= array( "配置管理" =>array('index',
 												"eq_create" 	=> 'webconfig2',
 											)
 							);
-$acl_inc[$i]['low_leve']['webtype']= array( "配置组管理" =>array('index',
-                                              array(
-                                                "列表"       => "webtype1",
-                                                "添加"       => "webtype2",
-                                                "修改"       => "webtype3",
-                                        )),
-                                        "data" =>array(
-                                                "eq_index"        => "webtype1",
-                                                "eq_create"       => "webtype2",
-                                                "eq_renewfield"   => "webtype3",
-                                        ));
+
 $i++;
 $acl_inc[$i]['low_title'] =  array('管理模块','fa fa-user');
 $acl_inc[$i]['low_leve']['manager']= array( "管理员管理" =>array('index',
@@ -197,4 +187,29 @@ $acl_inc[$i]["low_leve"]["maparea"]= array( "区用户分布" =>array("index",
     "data" =>array(
         "eq_index"        => "maparea1",
 
+    ));
+$i++;
+$acl_inc[$i]['low_title'] =  array('问题反馈','fa fa-wrench');
+$acl_inc[$i]["low_leve"]["qa"]= array( "问题类型" =>array("index",
+    array(
+        "列表"       => "qatype1",
+        "添加"       => "qatype2",
+        "修改"       => "qatype3",
+        "删除"       => "qatype4",
+    )),
+    "data" =>array(
+        "eq_index"        => "qatype1",
+        "eq_create"       => "qatype2",
+        "eq_update"       => "qatype3",
+        "eq_renewfield"   => "qatype3",
+        "eq_delete"       => "qatype4",
+    ));
+$acl_inc[$i]["low_leve"]["qalist"]= array( "问题列表" =>array("index",
+    array(
+        "列表"       => "qa1",
+        "删除"       => "qa4",
+    )),
+    "data" =>array(
+        "eq_index"        => "qa1",
+        "eq_delete"        => "qa4",
     ));

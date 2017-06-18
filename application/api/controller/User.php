@@ -20,17 +20,27 @@ class User extends Api
         $info = [];
         if(!empty($mobile) && !empty($password)){
 
-            $member = Db::name('user')->field('id,username,mobile,sd,lon,lat,idcard')->where(['mobile' =>$mobile,'password'=>md5(md5($password))])->find();
+            $member = Db::name('user')->field('id,truename,mobile,sd,photo,lng,lat,idcard,prov_cn,area_cn,city_cn,create_time')->where(['mobile' =>$mobile,'password'=>md5($password)])->find();
+            $weather = $this->weather($member['city_cn']);
+            $weather_arr = json_decode($weather,true);
 
             if($member['id']){
+                //更新登录时间
+                Db::name('user')->where(['id'=>$member['id']])->setField('update_time',time());
+
                 $info = [
                     'code'=>'200',
                     'msg'=>'成功',
-                    'data'=>$member
-                        ];
+                    'data'=>$member,
+                    'city'=>$weather_arr['data']['city'],
+                    'high'=>$weather_arr['data']['forecast'][0]['high'],
+                    'low'=>$weather_arr['data']['forecast'][0]['low'],
+                    'type'=>$weather_arr['data']['forecast'][0]['type'],
+                    'address'=>$member['prov_cn'].$member['city_cn'].$member['area_cn']
+                     ];
 
             }else{
-                $info = ['code'=>'400','msg'=>'用户不存在'];
+                $info = ['code'=>'500','msg'=>'用户不存在'];
             }
 
         }else{
@@ -49,7 +59,7 @@ class User extends Api
 
         $data['account'] = Request::instance()->param('account');
         $data['mobile'] = Request::instance()->param('mobile');
-        $data['password']= md5(md5(Request::instance()->param('password')));
+        $data['password']= md5(Request::instance()->param('password'));
         $data['truename'] = Request::instance()->param('realname');
         $data['idcard'] = Request::instance()->param('idcard');
         $data['country'] = Request::instance()->param('country');
@@ -69,7 +79,7 @@ class User extends Api
             $is_account = Db::name('user')->where(['account' =>$data['account']])->find();
             if(!empty($is_account['id'])){
                 $info = [
-                    'code'=>'500',
+                    'code'=>'900',
                     'msg'=>'账号重复'
                 ];
                 echo json_encode($info);die;
@@ -111,6 +121,7 @@ class User extends Api
              $addressarr = $this->jwd($address_arr,$data['city_cn']);
              $data['lng'] = $addressarr['lng'];
              $data['lat'] = $addressarr['lat'];
+             $data['create_time'] = time();
 
              $member = Db::name('user')->insert($data);
 
@@ -123,7 +134,7 @@ class User extends Api
 
             }else{
 
-                $info = ['code'=>'400','msg'=>'用户不存在'];
+                $info = ['code'=>'500','msg'=>'用户不存在'];
                 echo json_encode($info);die;
 
             }
@@ -155,16 +166,19 @@ class User extends Api
     //修改密码   POST
     function updpass(){
 
-        $data['account'] = Request::instance()->param('account');
-        $data['mobile'] = Request::instance()->param('mobile');
+        $account = Request::instance()->param('account');
+        $mobile = Request::instance()->param('mobile');
         $data['password']= md5(md5(Request::instance()->param('password')));
 
-        if(!empty($data['mobile']) && !empty($data['password'])){
+        if(!empty($mobile) && !empty($data['password'])){
 
-            $rel = Db::name('user')->where(['mobile'=>$data['mobile']])->update($data);
-            $info = ['code'=>'200','msg'=>'成功'];
+            $rel = Db::name('user')->where(['mobile'=>$mobile])->update($data);
+            if($rel==1){
+                $info = ['code'=>'200','msg'=>'成功'];
+            }else{
+                $info = ['code'=>'500','msg'=>'失败'];
+            }
             echo json_encode($info);die;
-
         }else{
             $info = ['code'=>'400','msg'=>'参数不全'];
             echo json_encode($info);die;
@@ -172,6 +186,91 @@ class User extends Api
 
 
 
+    }
+
+    //获取天气
+    function weather($city){
+
+        $ch = curl_init();
+        $timeout = 5;
+        curl_setopt($ch, CURLOPT_URL, 'http://wthrcdn.etouch.cn/weather_mini?city='.$city);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $file_contents = curl_exec($ch);
+        curl_close($ch);
+
+        return gzdecode($file_contents);
+
+
+    }
+
+    //问题属性
+    function problemtype(){
+
+        $qalist = Db::name('qa')->where(['status' =>'1'])->field('id,title')->select();
+        echo json_encode($qalist);die;
+
+    }
+
+    //问题反馈
+    function problem(){
+
+        $data['title'] = Request::instance()->param('title');
+        $data['msg'] = Request::instance()->param('msg');
+        if(!empty($data['msg']) && !empty($data['title'])){
+
+            $rel = Db::name('qalist')->insert($data);
+            if($rel==1){
+                $info = ['code'=>'200','msg'=>'成功'];
+            }else{
+                $info = ['code'=>'500','msg'=>'失败'];
+            }
+            echo json_encode($info);die;
+        }else{
+            $info = ['code'=>'400','msg'=>'参数不全'];
+            echo json_encode($info);die;
+        }
+
+
+    }
+
+
+    //修改电话
+    function pmobile(){
+
+        $mobile = Request::instance()->param('mobile');
+        $data['mobile'] = Request::instance()->param('nmobile');
+        if(!empty($mobile) && !empty($data['mobile'])){
+
+            $rel = Db::name('user')->where(['mobile'=>$mobile])->update($data);
+            if($rel==1){
+                $info = ['code'=>'200','msg'=>'成功'];
+            }else{
+                $info = ['code'=>'500','msg'=>'失败'];
+            }
+            echo json_encode($info);die;
+        }else{
+            $info = ['code'=>'400','msg'=>'参数不全'];
+            echo json_encode($info);die;
+        }
+
+    }
+
+    //修改地址
+    function paddress(){
+        $uid = Request::instance()->param('uid');
+        $data['prov'] = Request::instance()->param('prov');
+        $data['city'] = Request::instance()->param('city');
+        $data['area'] = Request::instance()->param('area');
+        $data['village'] = Request::instance()->param('village');
+
+            $rel = Db::name('user')->where(['id'=>$uid])->update($data);
+            if($rel==1){
+                $info = ['code'=>'200','msg'=>'成功'];
+            }else{
+                $info = ['code'=>'500','msg'=>'失败'];
+            }
+            echo json_encode($info);die;
     }
 
 

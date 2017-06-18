@@ -15,30 +15,36 @@ class Index extends Api
     //首页
     function index(){
 
+        //轮播图
+            $solution = Db::name('solution')->field('id,picurl')->select();
+        //webconfig
+            $title = Db::name('webconfig')->where(['id'=>'4'])->find();
+            $content = Db::name('webconfig')->where(['id'=>'11'])->find();
+            $info = [
+                'code'=>'200',
+                'msg'=>'成功',
+                'banner'=>$solution,
+                'title'=> $title['varvalue'],
+                'content'=>$content['varvalue']
+            ];
 
-        $info = [];
-            //轮播图
-
-            $member = Db::name('user')->field('id,username,mobile,sd,lon,lat,idcard')->where(['mobile' =>$mobile,'password'=>md5(md5($password))])->find();
-
-            if($member['id']){
-                $info = [
-                    'code'=>'200',
-                    'msg'=>'成功',
-                    'data'=>$member
-                        ];
-
-            }else{
-                $info = ['code'=>'400','msg'=>'用户不存在'];
-            }
-
-
-
-        echo json_encode($info);die;
-
+            echo json_encode($info);die;
     }
 
 
+
+   //图表
+    function chart(){
+
+        $info = [
+            'code'=>'200',
+            'msg'=>'成功',
+            'watthourmeter'=>111,
+            'inverter'=>2
+        ];
+        echo json_encode($info);die;
+
+    }
 
 
 
